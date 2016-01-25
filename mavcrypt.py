@@ -116,6 +116,7 @@ class MavCrypter(Object):
 
 def main():
 
+	# Will probably add optparse for this
 	device = None
 	baudrate = 2048
 	key = None
