@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import socket, serial, time
-from Crypto.Ciper import AES
+from Crypto.Cipher import AES
 
 class MavCrypter(Object):
 	'''Creates a UDP and a serial connection and encrypts/decrypts data between them.'''
