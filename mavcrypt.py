@@ -109,7 +109,7 @@ class MavCrypter(Object):
 
 		try:
 
-			cipertext = self.encrypter.encrypt(plaintext)
+			ciphertext = self.encrypter.encrypt(plaintext)
 
 			return ciphertext
 
