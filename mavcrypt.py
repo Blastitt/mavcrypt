@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import socket, serial, time
+from Crypto.Ciper import AES
 
 class MavCrypter(Object):
 	'''Creates a UDP and a serial connection and encrypts/decrypts data between them.'''
@@ -19,6 +20,10 @@ class MavCrypter(Object):
 		self.udpdata = None
 
 		self.udpconnection.bind((udplocalip, udplocalport))
+
+
+		#Initialize some fields for encryption/decryption
+		self.encrypter = AES.new(self.key, AES.MODE_CBC, "Test IV")
 
 
 
@@ -68,7 +73,7 @@ class MavCrypter(Object):
 		try:
 
 			self.serialdata = None
-			self.serialdata = self.serialconnection.read(4096)
+			self.serialdata = self.serialconnection.read(16)
 
 		except Exception as e:
 
@@ -92,8 +97,8 @@ class MavCrypter(Object):
 
 		try:
 
-			#TODO: Implement decryption method
-			plaintext = ciphertext
+			plaintext = self.encrypter.decrypt(ciphertext)
+			
 			return plaintext
 
 		except Exception as e:
@@ -104,8 +109,8 @@ class MavCrypter(Object):
 
 		try:
 
-			#TODO: Implement encryption method
-			ciphertext = plaintext
+			cipertext = self.encrypter.encrypt(plaintext)
+
 			return ciphertext
 
 		except Exception as e:
